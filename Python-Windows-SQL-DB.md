@@ -1,34 +1,21 @@
-# Connect to your SQL Database using Python
+## Python SQL-DB
 
 ##Requirements
 
-- [Python 2.7.6](https://www.python.org/download/releases/2.7.6/)
+- Python 2.7.6. [](https://www.python.org/download/releases/2.7.6/)
 
     
 
 ## Install the required modules
 
-### On Windows 
-
-
-Open cmd.exe as administrator. Navigate to **C:\ -> Python27 -> Scripts** and run the following command.
+Navigate to **C:\ -> Python27 -> Scripts** and run the following command.
 <br>
 
     pip install --allow-external pyodbc --allow-unverified pyodbc pyodbc
 
-### On Ubunutu
-
-Open your terminal and enter the following commands.
-
-	
-    sudo apt-get install unixodbc unixodbc-dev freetds-dev freetds-bin tdsodbc
-    pip install --allow-external pyodbc --allow-unverified pyodbc pyodbc
-
 
 ##Connect to your SQL-DB     
-On **Windows**, create a new file called **test.py** and place it in the **C:\ -> Python27** directory. Paste the following code inside it.
-
-On **Ubuntu**, you can place this place in the directory of your choice.
+Create a new file called **test.py** and place it in the **C:\ -> Python27** directory. Paste the following code inside it.
 
 	import pyodbc
 	server = 'tcp:yourservername.database.windows.net'
@@ -92,4 +79,3 @@ On **Ubuntu**, you can place this place in the directory of your choice.
 	cursor.execute("exec sp_dosomething(123, 'abc')")
 
    	
-
