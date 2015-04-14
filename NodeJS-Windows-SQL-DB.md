@@ -129,7 +129,7 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 ## Transactions
 	
 	
-	> [AZURE.NOTE] The method conn.beginTransactions will not work in SQL Database. Please follow the code example to perform transactions in SQL Database.
+> [AZURE.NOTE] The method conn.beginTransactions will not work in SQL Database. Please follow the code example to perform transactions in SQL Database.
 	
 	
 		conn.query("BEGIN TRANSACTION", function (err, results) {
@@ -155,7 +155,7 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 ## Stored procedures
 	
 	
-	> [AZURE.NOTE] For this code sample to work, you must first have or create a stored procedure that inputs no parameters. You can create a stored procedure with a tool such as SSMS.
+> [AZURE.NOTE] For this code sample to work, you must first have or create a stored procedure that inputs no parameters. You can create a stored procedure with a tool such as SSMS.
 	
 	
 		conn.query("exec NameOfStoredProcedure", function (err, results) {
