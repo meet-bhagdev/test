@@ -2,7 +2,7 @@
 
 ##Requirements
 
-- Python 2.7.6. [](https://www.python.org/download/releases/2.7.6/)
+- [Python 2.7.6](https://www.python.org/download/releases/2.7.6/)
 
     
 
@@ -14,54 +14,46 @@ Navigate to **C:\ -> Python27 -> Scripts** and run the following command.
     pip install --allow-external pyodbc --allow-unverified pyodbc pyodbc
 
 
-##Connect to your SQL-DB     
-Create a new file called **test.py** and place it in the **C:\ -> Python27** directory. Paste the following code inside it.
+## Create a database and retrieve your connection string
+ 
+See the [getting started page](http://example.com/) to learn how to create a sample database and retrieve your connection string. It is important you follow the guide to create an **AdventureWorks database template**. The examples shown below will only work with the **AdventureWorks schema**. 
+ 
+
+## Connect to your SQL Database
+
 
 	import pyodbc
-	server = 'tcp:yourservername.database.windows.net'
-	database = 'yourdatabasename'
-	username = 'yourusername'
-	password = 'yourpassword'
-	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD=' + password)
-
-	
-
-##Create your first table on the cloud
+	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:csucla2015.database.windows.net;DATABASE=AdventureWorks;UID=meet_bhagdev;PWD=channelV1')
+	cursor = cnxn.cursor())
 
 
+## Execute a query and retrieve the result set
+
+	import pyodbc
+	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:csucla2015.database.windows.net;DATABASE=AdventureWorks;UID=meet_bhagdev;PWD=channelV1')
 	cursor = cnxn.cursor()
-	cursor.execute("""
-	IF OBJECT_ID('test', 'U') IS NOT NULL
-	    DROP TABLE test
-	CREATE TABLE test (
-	    name VARCHAR(100),
-	    value INT NOT NULL,
-	    PRIMARY KEY(name)
-	)
-	""")
-
-##Insert values in your table
-
-
-	cursor.execute("INSERT INTO test (name, value)  VALUES ('NodeJS', 3), ( 'Python' , 1), ('C#', 9)")
-	# you must call commit() to persist your data if you don't set autocommit to True
-	cnxn.commit()
-
-##Delete values in your table
-
-
-	cursor.execute("DELETE FROM test WHERE value = 3;")
-	cnxn.commit()
-
-
-
-##Select values from your table
-
-	cursor.execute("SELECT * FROM test")
+	cursor.execute('SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;')
 	row = cursor.fetchone()
 	while row:
-    	print row
-    	row = cursor.fetchone()
+	    print str(row[0]) + " " + str(row[1]) + " " + str(row[2]) 	
+	    row = cursor.fetchone()
+
+    
+
+## Inserting a row, passing parameters, and retrieving the generated primary key value
+	
+	import pyodbc
+	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:csucla2015.database.windows.net;DATABASE=AdventureWorks;UID=meet_bhagdev;PWD=channelV1')
+	cursor = cnxn.cursor()
+	cursor.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express', 'SQLEXPRESS', 0, 0, CURRENT_TIMESTAMP)")
+	row = cursor.fetchone()
+	while row:
+	    print "Inserted Product ID : " +str(row[0])
+	    row = cursor.fetchone()
+
+
+
+
 
 ##Transactions
 
