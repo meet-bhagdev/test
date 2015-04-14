@@ -59,7 +59,7 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 	var result = ""
 	var sql = require('msnodesql');
 	var driver = 'SQL Server Native Client 11.0';
-	var server = 'tcp:yourdatabase.database.windows.net';
+	var server = 'tcp:yourservername.database.windows.net';
 	var user = 'yourusername';
 	var pwd = 'yourpassword';
 	var database = 'yourdatabase';
