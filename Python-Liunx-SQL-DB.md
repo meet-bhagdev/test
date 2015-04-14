@@ -18,7 +18,7 @@
 	ms.author="mebha"/>
 
 
-# Connect to SQL Database by using Python on Linux
+# Using SQL Database with Python on Ubuntu
 
 
 ## Requirements
