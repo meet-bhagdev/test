@@ -164,7 +164,8 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 				return;
 			}
 		});
-	
+	});
+
 	
 ## Configure your app
 	
