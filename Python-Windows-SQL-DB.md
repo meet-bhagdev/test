@@ -18,7 +18,7 @@ Navigate to **C:\ -> Python27 -> Scripts** and run the following command.
 Create a new file called **test.py** and place it in the **C:\ -> Python27** directory. Paste the following code inside it.
 
 	import pyodbc
-	server = 'tcp:yourdatabase.database.windows.net'
+	server = 'tcp:yourservername.database.windows.net'
 	database = 'yourdatabasename'
 	username = 'yourusername'
 	password = 'yourpassword'
