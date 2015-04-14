@@ -48,47 +48,37 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 
 
 
-	import pymssql
-	conn = pymssql.connect(server='yourservername.database.windows.net', user='yourusername@databaseid', password='yourpassword', database='yourdatabasename')
+import pymssql
+conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
 	
 
 
 
 ## Execute a query and retrieve the result set
 
-
-
-## Insert values in your table
-
-
-	cursor.executemany(
-		"INSERT INTO test VALUES (%s, %d)",
-    	[('NodeJS', '2'),
-     	('Python', '10'),
-     	('C#', '20')])
-	# you must call commit() to persist your data if you don't set autocommit to True
-	conn.commit()
-
-
-
-## Delete values in your table
-
-
-	cursor.execute("DELETE FROM test WHERE value = 2;")
-	conn.commit()
-
-
-## Select values from your table
-
-
-	cursor.execute('SELECT * FROM test')
-    result = ""
+import pymssql
+conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
+cursor = conn.cursor()
+cursor.execute('SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;')
+row = cursor.fetchone()
+while row:
+    print str(row[0]) + " " + str(row[1]) + " " + str(row[2]) 	
     row = cursor.fetchone()
-    while row:
-        result += str(row[0]) + str(" : ") + str(row[1]) + str(" votes")
-        result += str("\n")
-        row = cursor.fetchone()
-    print result
+
+    
+
+
+## Inserting a row, passing parameters, and retrieving the generated primary key value
+
+import pymssql
+conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
+cursor = conn.cursor()
+cursor.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express', 'SQLEXPRESS', 0, 0, CURRENT_TIMESTAMP)")
+row = cursor.fetchone()
+while row:
+    print "Inserted Product ID : " +str(row[0])
+    row = cursor.fetchone()
+
 
 
 
