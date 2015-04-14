@@ -78,100 +78,100 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 ## Create your first table on the cloud
 
 
-	conn.queryRaw("IF OBJECT_ID('test', 'U') IS NOT NULL DROP TABLE test; CREATE TABLE test ( name VARCHAR(100), value INT NOT NULL, PRIMARY KEY(name);)", function (err, results) 
-	{
-		if (err) 
+		conn.queryRaw("IF OBJECT_ID('test', 'U') IS NOT NULL DROP TABLE test; CREATE TABLE test ( name VARCHAR(100), value INT NOT NULL, PRIMARY KEY(name);)", function (err, results) 
 		{
-			console.log("Error running query1!");
-			return;
-		}
-	});
-
-
+			if (err) 
+			{
+				console.log("Error running query1!");
+				return;
+			}
+		});
+	
+	
 ## Insert values in your table
-
-
-	conn.queryRaw("INSERT INTO test (name, value) VALUES ('Python','1'),('NodeJS','1'),('C#','1'); ", function (err, results) {
-		if (err) {
-			console.log("Error running query2!");
-			return;
-		}
-	});
-
-
+	
+	
+		conn.queryRaw("INSERT INTO test (name, value) VALUES ('Python','1'),('NodeJS','1'),('C#','1'); ", function (err, results) {
+			if (err) {
+				console.log("Error running query2!");
+				return;
+			}
+		});
+	
+	
 ## Delete values in your table
-
-
-	conn.queryRaw("DELETE FROM test WHERE value = 2 ;", function (err, results)
-	{
-		if (err) {
-			console.log("Error running query3!");
-			return;
-		}
-	});
-
-
+	
+	
+		conn.queryRaw("DELETE FROM test WHERE value = 2 ;", function (err, results)
+		{
+			if (err) {
+				console.log("Error running query3!");
+				return;
+			}
+		});
+	
+	
 ## Select values from your table
-
-
-	conn.queryRaw("SELECT * FROM test", function (err, results) {
-		if (err) {
-		console.log("Error running query4!");
-		return;
-		}
-		for (var i = 0; i < results.rows.length; i++) {
-			result = result + results.rows[i][0] + " : " + results.rows[i][1] + " votes";
-			result+= "\n";
-		}
-	});
-
-
+	
+	
+		conn.queryRaw("SELECT * FROM test", function (err, results) {
+			if (err) {
+			console.log("Error running query4!");
+			return;
+			}
+			for (var i = 0; i < results.rows.length; i++) {
+				result = result + results.rows[i][0] + " : " + results.rows[i][1] + " votes";
+				result+= "\n";
+			}
+		});
+	
+	
 ## Transactions
-
-
-> [AZURE.NOTE] The method conn.beginTransactions will not work in SQL Database. Please follow the code example to perform transactions in SQL Database.
-
-
-	conn.query("BEGIN TRANSACTION", function (err, results) {
-		if (err) {
-			console.log("Error running query5!");
-			return;
-		}
-	});
-	conn.queryRaw("DELETE FROM test WHERE value = 12 ; ", function (err, results) {
-		if (err) {
-			console.log("Error running query6!");
-			return;
-		}
-	});
-	conn.queryRaw("ROLLBACK TRANSACTION; ", function (err, results) {
-		if (err) {
-			console.log("Error running query7!");
-			return;
-		}
-	});
-
-
+	
+	
+	> [AZURE.NOTE] The method conn.beginTransactions will not work in SQL Database. Please follow the code example to perform transactions in SQL Database.
+	
+	
+		conn.query("BEGIN TRANSACTION", function (err, results) {
+			if (err) {
+				console.log("Error running query5!");
+				return;
+			}
+		});
+		conn.queryRaw("DELETE FROM test WHERE value = 12 ; ", function (err, results) {
+			if (err) {
+				console.log("Error running query6!");
+				return;
+			}
+		});
+		conn.queryRaw("ROLLBACK TRANSACTION; ", function (err, results) {
+			if (err) {
+				console.log("Error running query7!");
+				return;
+			}
+		});
+	
+	
 ## Stored procedures
-
-
-> [AZURE.NOTE] For this code sample to work, you must first have or create a stored procedure that inputs no parameters. You can create a stored procedure with a tool such as SSMS.
-
-
-	conn.query("exec NameOfStoredProcedure", function (err, results) {
-		if (err) {
-			console.log("Error running query8!");
-			return;
-		}
-	});
-
-
+	
+	
+	> [AZURE.NOTE] For this code sample to work, you must first have or create a stored procedure that inputs no parameters. You can create a stored procedure with a tool such as SSMS.
+	
+	
+		conn.query("exec NameOfStoredProcedure", function (err, results) {
+			if (err) {
+				console.log("Error running query8!");
+				return;
+			}
+		});
+	
+	
 ## Configure your app
-
-
-	http.createServer(function (req, res) {
-		res.writeHead(200, {'Content-Type': 'text/html'});
-		res.end('<h1> Sample Node JS applicaiton </h1><pre>' + result);
-	}).listen(1337, "127.0.0.1");
-	console.log('Server running at http://127.0.0.1:1337/');
-
+	
+	
+		http.createServer(function (req, res) {
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			res.end('<h1> Sample Node JS applicaiton </h1><pre>' + result);
+		}).listen(1337, "127.0.0.1");
+		console.log('Server running at http://127.0.0.1:1337/');
+	
