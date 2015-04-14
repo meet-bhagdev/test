@@ -38,9 +38,13 @@ Open your terminal and navigate to a directory where you plan on creating your p
 	sudo apt-get --assume-yes install python-dev python-pip
 	sudo pip install pymssql
 
+ 
+## Create a database and retrieve your connection string
+ 
+See the [getting started page](http://example.com/) to learn how to create a sample database and retrieve your connection string. 
+ 
 
-
-## Connect to your SQL-DB
+## Connect to your SQL Database
 
 
 
@@ -50,19 +54,8 @@ Open your terminal and navigate to a directory where you plan on creating your p
 
 
 
-## Create your first table on the cloud
+## Execute a query and retrieve the result set
 
-
-	cursor = conn.cursor()
-	cursor.execute("""
-	IF OBJECT_ID('test', 'U') IS NOT NULL
-	    DROP TABLE test
-	CREATE TABLE test (
-	    name VARCHAR(100),
-	    value INT NOT NULL,
-	    PRIMARY KEY(name)
-	)
-	""")
 
 
 ## Insert values in your table
