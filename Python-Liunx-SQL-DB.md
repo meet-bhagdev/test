@@ -76,8 +76,6 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 	    row = cursor.fetchone()
 
 
-
-
 ## Transactions
 
 
