@@ -1,4 +1,4 @@
-## Python SQL-DB
+# Using SQL Database with Python on Windows
 
 ##Requirements
 
@@ -23,14 +23,14 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 
 
 	import pyodbc
-	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:csucla2015.database.windows.net;DATABASE=AdventureWorks;UID=meet_bhagdev;PWD=channelV1')
+	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:yourservername.database.windows.net;DATABASE=AdventureWorks;UID=yourusername;PWD=yourpassword')
 	cursor = cnxn.cursor())
 
 
 ## Execute a query and retrieve the result set
 
 	import pyodbc
-	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:csucla2015.database.windows.net;DATABASE=AdventureWorks;UID=meet_bhagdev;PWD=channelV1')
+	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:yourserver.database.windows.net;DATABASE=AdventureWorks;UID=yourusername;PWD=yourpassword')
 	cursor = cnxn.cursor()
 	cursor.execute('SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;')
 	row = cursor.fetchone()
@@ -41,18 +41,15 @@ See the [getting started page](http://example.com/) to learn how to create a sam
     
 
 ## Inserting a row, passing parameters, and retrieving the generated primary key value
-	
+
 	import pyodbc
-	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:csucla2015.database.windows.net;DATABASE=AdventureWorks;UID=meet_bhagdev;PWD=channelV1')
+	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:yourserver.database.windows.net;DATABASE=AdventureWorks;UID=yourusername;PWD=yourpassword')
 	cursor = cnxn.cursor()
 	cursor.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express', 'SQLEXPRESS', 0, 0, CURRENT_TIMESTAMP)")
 	row = cursor.fetchone()
 	while row:
 	    print "Inserted Product ID : " +str(row[0])
 	    row = cursor.fetchone()
-
-
-
 
 
 ##Transactions
