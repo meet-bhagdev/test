@@ -1,5 +1,5 @@
 <properties 
-	pageTitle="Connect to SQL Database by using NodeJS with msnodesql on Windows" 
+	pageTitle="Connect to SQL Database by using Python with pymssql on Ubuntu" 
 	description="Give a code sample you can use to connect to Azure SQL Database."
 	services="sql-database" 
 	documentationCenter="" 
@@ -47,37 +47,33 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 ## Connect to your SQL Database
 
 
-
-import pymssql
-conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
-	
-
+	import pymssql
+	conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
 
 
 ## Execute a query and retrieve the result set
 
-import pymssql
-conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
-cursor = conn.cursor()
-cursor.execute('SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;')
-row = cursor.fetchone()
-while row:
-    print str(row[0]) + " " + str(row[1]) + " " + str(row[2]) 	
-    row = cursor.fetchone()
+	import pymssql
+	conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
+	cursor = conn.cursor()
+	cursor.execute('SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;')
+	row = cursor.fetchone()
+	while row:
+	    print str(row[0]) + " " + str(row[1]) + " " + str(row[2]) 	
+	    row = cursor.fetchone()
 
     
 
-
 ## Inserting a row, passing parameters, and retrieving the generated primary key value
 
-import pymssql
-conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
-cursor = conn.cursor()
-cursor.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express', 'SQLEXPRESS', 0, 0, CURRENT_TIMESTAMP)")
-row = cursor.fetchone()
-while row:
-    print "Inserted Product ID : " +str(row[0])
-    row = cursor.fetchone()
+	import pymssql
+	conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
+	cursor = conn.cursor()
+	cursor.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express', 'SQLEXPRESS', 0, 0, CURRENT_TIMESTAMP)")
+	row = cursor.fetchone()
+	while row:
+	    print "Inserted Product ID : " +str(row[0])
+	    row = cursor.fetchone()
 
 
 
