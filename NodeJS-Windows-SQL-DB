@@ -59,10 +59,10 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 	var result = ""
 	var sql = require('msnodesql');
 	var driver = 'SQL Server Native Client 11.0';
-	var server = 'tcp:fejcz4m54q.database.windows.net';
-	var user = 'meet_bhagdev';
-	var pwd = '*********';
-	var database = 'meet_bhagdev';
+	var server = 'tcp:yourdatabase.database.windows.net';
+	var user = 'yourusername';
+	var pwd = 'yourpassword';
+	var database = 'yourdatabase';
 	var useTrustedConnection = false;
 	
 	var conn_str = "Driver={" + driver + "};Server=" + server + ";"
@@ -78,7 +78,7 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 ## Create your first table on the cloud
 
 
-	conn.queryRaw("IF OBJECT_ID('votes1', 'U') IS NOT NULL DROP TABLE votes1; CREATE TABLE votes1 ( name VARCHAR(100), value INT NOT NULL, PRIMARY KEY(name);)", function (err, results) 
+	conn.queryRaw("IF OBJECT_ID('test', 'U') IS NOT NULL DROP TABLE test; CREATE TABLE test ( name VARCHAR(100), value INT NOT NULL, PRIMARY KEY(name);)", function (err, results) 
 	{
 		if (err) 
 		{
@@ -91,7 +91,7 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 ## Insert values in your table
 
 
-	conn.queryRaw("INSERT INTO votes1 (name, value) VALUES ('Python','1'),('NodeJS','1'),('C#','1'); ", function (err, results) {
+	conn.queryRaw("INSERT INTO test (name, value) VALUES ('Python','1'),('NodeJS','1'),('C#','1'); ", function (err, results) {
 		if (err) {
 			console.log("Error running query2!");
 			return;
@@ -102,10 +102,10 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 ## Delete values in your table
 
 
-	conn.queryRaw("DELETE FROM votes1 WHERE value = 2 ;", function (err, results)
+	conn.queryRaw("DELETE FROM test WHERE value = 2 ;", function (err, results)
 	{
 		if (err) {
-			console.log("Error running query2!");
+			console.log("Error running query3!");
 			return;
 		}
 	});
@@ -114,9 +114,9 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 ## Select values from your table
 
 
-	conn.queryRaw("SELECT * FROM votes1", function (err, results) {
+	conn.queryRaw("SELECT * FROM test", function (err, results) {
 		if (err) {
-		console.log("Error running query!");
+		console.log("Error running query4!");
 		return;
 		}
 		for (var i = 0; i < results.rows.length; i++) {
@@ -138,7 +138,7 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 			return;
 		}
 	});
-	conn.queryRaw("DELETE FROM votes1 WHERE value = 12 ; ", function (err, results) {
+	conn.queryRaw("DELETE FROM test WHERE value = 12 ; ", function (err, results) {
 		if (err) {
 			console.log("Error running query6!");
 			return;
@@ -160,7 +160,7 @@ You should now see a build folder inside msnodel. Navigate to build > release. C
 
 	conn.query("exec NameOfStoredProcedure", function (err, results) {
 		if (err) {
-			console.log("Error running query5!");
+			console.log("Error running query8!");
 			return;
 		}
 	});
