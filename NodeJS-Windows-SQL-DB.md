@@ -59,6 +59,12 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 
 ## Connect to your SQL Database
 
+
+Copy the following code in a .js file located in your project directory. Run it using the following command
+	
+	
+	node index.js
+	
 	var http = require('http');
 	var sql = require('msnodesql');
 	var http = require('http');
@@ -139,25 +145,38 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 	
 > [AZURE.NOTE] The method conn.beginTransactions will not work in SQL Database. Please follow the code example to perform transactions in SQL Database.
 	
+	var http = require('http');
+	var sql = require('msnodesql');
+	var http = require('http');
+	var fs = require('fs');
+	var useTrustedConnection = false;
+	var conn_str = "Driver={SQL Server Native Client 11.0};Server=tcp:yourserver.database.windows.net;" + (useTrustedConnection == true ? "Trusted_Connection={Yes};" : "UID=yourusername;PWD=yourpassword;") + "Database={AdventureWorks};";
+	sql.open(conn_str, function (err, conn) {
+	    if (err) {
+	        console.log("Error opening the connection!");
+	        return;
+	    }
+	    else
+	        console.log("Successfuly connected");
 	
-		conn.query("BEGIN TRANSACTION", function (err, results) {
-			if (err) {
-				console.log("Error running query5!");
-				return;
-			}
-		});
-		conn.queryRaw("DELETE FROM test WHERE value = 12 ; ", function (err, results) {
-			if (err) {
-				console.log("Error running query6!");
-				return;
-			}
-		});
-		conn.queryRaw("ROLLBACK TRANSACTION; ", function (err, results) {
-			if (err) {
-				console.log("Error running query7!");
-				return;
-			}
-		});
+	
+	    conn.queryRaw("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express New ', 'SQLEXPRESS New', 1, 1, CURRENT_TIMESTAMP)", function (err, results) {
+	        if (err) {
+	            console.log("Error running query!");
+	            return;
+	        }
+	        for (var i = 0; i < results.rows.length; i++) {
+	            console.log("Product ID Inserted : "+results.rows[i]);
+	        }
+	    });
+	    
+	    conn.queryRaw("ROLLBACK TRANSACTION; ", function (err, results) {
+            	if (err) {
+        		console.log("Rollback failed");
+        		return;
+        	}
+    	    });
+	});
 	
 	
 ## Stored procedures
@@ -174,13 +193,4 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 		});
 	});
 
-	
-## Configure your app
-	
-	
-		http.createServer(function (req, res) {
-			res.writeHead(200, {'Content-Type': 'text/html'});
-			res.end('<h1> Sample Node JS applicaiton </h1><pre>' + result);
-		}).listen(1337, "127.0.0.1");
-		console.log('Server running at http://127.0.0.1:1337/');
 	
