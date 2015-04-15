@@ -54,7 +54,9 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 
 ##Transactions
 
-
+	import pyodbc
+	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:yourserver.database.windows.net;DATABASE=AdventureWorks;UID=yourusername;PWD=yourpassword')
+	cursor = cnxn.cursor()
 	cursor.execute("BEGIN TRANSACTION")
 	cursor.execute("DELETE FROM test WHERE value = 1;")
 	cnxn.rollback()
@@ -63,8 +65,11 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 ##Stored Procedures
 
 
-> [AZURE.NOTE] We are using pyodbc to connect to SQL which currently has a limitation and does not allow the use of output parameters. Since we can't use output parameters at this point, you'll need to return results in a result set. Usually this means just ending your stored procedure with a SELECT statement.
+> [AZURE.NOTE] We are using pyodbc to connect to SQL which currently has a limitation and does not allow the use of output parameters. Since we can't use output parameters at this point, you'll need to return results in a result set. Usually this means just ending your stored procedure with a SELECT statement. Additionally you will have to use a DBA tool such as SSMS to create your stored procedure. There is no way to create a stored procedure using pyodbc.
 
+	import pyodbc
+	cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=tcp:yourserver.database.windows.net;DATABASE=AdventureWorks;UID=yourusername;PWD=yourpassword')
+	cursor = cnxn.cursor()
 	cursor.execute("exec sp_dosomething(123, 'abc')")
 
    	
