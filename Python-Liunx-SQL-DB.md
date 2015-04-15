@@ -79,8 +79,13 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 ## Transactions
 
 
+This code example demonstrates the use of transactions in which you begin a transaction, insert a tuple and then rollback your transaction.
+
+	import pymssql
+	conn = pymssql.connect(server='yourserver.database.windows.net', user='yourusername@yourserver', password='yourpassword', database='AdventureWorks')
+	cursor = conn.cursor()
 	cursor.execute("BEGIN TRANSACTION")
-	cursor.execute("DELETE FROM test WHERE value = 10;")
+	cursor.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express New', 'SQLEXPRESS New', 0, 0, CURRENT_TIMESTAMP)")
 	cnxn.rollback()
 
 ## Stored procedures
@@ -89,13 +94,13 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 	with pymssql.connect("yourserver", "yourusername", "yourpassword", "yourdatabase") as conn:
     with conn.cursor(as_dict=True) as cursor:
         cursor.execute("""
-        CREATE PROCEDURE FindName
+        CREATE PROCEDURE FindProductNameName
             @name VARCHAR(100)
         AS BEGIN
-            SELECT * FROM test WHERE name = @name
+            SELECT * FROM Product WHERE Name = @name
         END
         """)
-        cursor.callproc('FindPerson', ('NodeJS',))
+        cursor.callproc('FindPerson', ('Bike',))
         for row in cursor:
             print("Name=%s, Votes=%d" % (row['name'], row['value']))
 
