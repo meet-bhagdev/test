@@ -100,7 +100,7 @@ This code example demonstrates the use of transactions in which you begin a tran
             SELECT * FROM Product WHERE Name = @name
         END
         """)
-        cursor.callproc('FindPerson', ('Bike',))
+        cursor.callproc('FindPerson', ('Bike'))
         for row in cursor:
-            print("Name=%s, Votes=%d" % (row['name'], row['value']))
+            print str(row[0]) + " " + str(row[1]) + " " + str(row[2])
 
