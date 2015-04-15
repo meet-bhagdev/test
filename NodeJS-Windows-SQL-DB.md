@@ -18,7 +18,7 @@
 	ms.author="mebha"/>
 
 
-# Connect to SQL Database by using NodeJS with msnodesql on Windows
+# Using SQL Database with NodeJS on Windoes
 
 
 ## Requirements
@@ -27,7 +27,7 @@
 You might already have some of the following required installations. ??
 
 
--  Node.js – [Version 0.8.9 (32 bit version)](http://blog.nodejs.org/2012/09/11/node-v0-8-9-stable/).  Make sure you download the x86 version and not the x64 version.
+-  Node.js – [Version 0.8.9 (32 bit version)](http://blog.nodejs.org/2012/09/11/node-v0-8-9-stable/).  Make sure you download the x86 version and not the x64 version. You might have to uninstall your current version and re-install this version to ensure compatibility.
 - [Python 2.7.6](https://www.python.org/download/releases/2.7.6/).
 - [Visual C++ 2010](https://app.vssps.visualstudio.com/profile/review?download=true&family=VisualStudioCExpress&release=VisualStudio2010&type=web&slcid=0x409&context=eyJwZSI6MSwicGMiOjEsImljIjoxLCJhbyI6MCwiYW0iOjEsIm9wIjpudWxsLCJhZCI6bnVsbCwiZmEiOjAsImF1IjpudWxsLCJjdiI6OTY4OTg2MzU1LCJmcyI6MCwic3UiOjAsImVyIjoxfQ2) - the Express edition is freely available from Microsoft.
 - SQL Server Native Client 11.0 - available as Microsoft SQL Server 2012 Native Client found in the [SQL Server 2012 Feature Pack](http://www.microsoft.com/en-us/download/details.aspx?id=29065).
@@ -52,79 +52,87 @@ Once node-gyp is installed, run the following commands inside the *YourProjectDi
 You should now see a build folder inside msnodel. Navigate to build > release. Copy the sqlserver.node file and paste it in the msnodesql > lib folder. Replace the old file if needed.
 
 
-## Connect to your SQL-DB
+## Create a database and retrieve your connection string
+ 
+See the [getting started page](http://example.com/) to learn how to create a sample database and retrieve your connection string. It is important you follow the guide to create an **AdventureWorks database template**. The examples shown below will only work with the **AdventureWorks schema**. 
+
+
+## Connect to your SQL Database
+
+	var http = require('http');
+	var sql = require('msnodesql');
+	var http = require('http');
+	var fs = require('fs');
+	var useTrustedConnection = false;
+	var conn_str = "Driver={SQL Server Native Client 11.0};Server=tcp:yourserver.database.windows.net;" + (useTrustedConnection == true ? "Trusted_Connection={Yes};" : "UID=yourusername;PWD=yourpassword;") + "Database={AdventureWorks};";
+	sql.open(conn_str, function (err, conn) {
+	    if (err) {
+	        console.log("Error opening the connection!");
+	        return;
+	    }
+	    else
+	        console.log("Successfuly connected");
+	});	
+	
+	
+## Execute a query and retrieve the result set
+
+	var http = require('http');
+	var sql = require('msnodesql');
+	var http = require('http');
+	var fs = require('fs');
+	var useTrustedConnection = false;
+	var conn_str = "Driver={SQL Server Native Client 11.0};Server=tcp:yourserver.database.windows.net;" + (useTrustedConnection == true ? "Trusted_Connection={Yes};" : "UID=yourusername;PWD=yourpassword;") + "Database={AdventureWorks};";
+	sql.open(conn_str, function (err, conn) {
+	    if (err) {
+	        console.log("Error opening the connection!");
+	        return;
+	    }
+	    else
+	        console.log("Successfuly connected");
+	
+	
+	    conn.queryRaw("SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;", function (err, results) {
+	        if (err) {
+	            console.log("Error running query1!");
+	            return;
+	        }
+	        for (var i = 0; i < results.rows.length; i++) {
+	            console.log(results.rows[i]);
+	        }
+	    });
+	   
+	});
+
+## Inserting a row, passing parameters, and retrieving the generated primary key value
 
 
 	var http = require('http');
-	var result = ""
 	var sql = require('msnodesql');
-	var driver = 'SQL Server Native Client 11.0';
-	var server = 'tcp:yourservername.database.windows.net';
-	var user = 'yourusername';
-	var pwd = 'yourpassword';
-	var database = 'yourdatabase';
+	var http = require('http');
+	var fs = require('fs');
 	var useTrustedConnection = false;
-	
-	var conn_str = "Driver={" + driver + "};Server=" + server + ";"
-		+ (useTrustedConnection == true ? "Trusted_Connection={Yes};" : "UID="
-		+ user + ";PWD=" + pwd + ";") + "Database={" + database + "};";
+	var conn_str = "Driver={SQL Server Native Client 11.0};Server=tcp:yourserver.database.windows.net;" + (useTrustedConnection == true ? "Trusted_Connection={Yes};" : "UID=yourusername;PWD=yourpassword;") + "Database={AdventureWorks};";
 	sql.open(conn_str, function (err, conn) {
-		if (err) {
-    		console.log("Error opening the connection!");
-    		return;
-		}
-
-
-## Create your first table on the cloud
-
-
-		conn.queryRaw("IF OBJECT_ID('test', 'U') IS NOT NULL DROP TABLE test; CREATE TABLE test ( name VARCHAR(100), value INT NOT NULL, PRIMARY KEY(name);)", function (err, results) 
-		{
-			if (err) 
-			{
-				console.log("Error running query1!");
-				return;
-			}
-		});
+	    if (err) {
+	        console.log("Error opening the connection!");
+	        return;
+	    }
+	    else
+	        console.log("Successfuly connected");
 	
 	
-## Insert values in your table
-	
-	
-		conn.queryRaw("INSERT INTO test (name, value) VALUES ('Python','1'),('NodeJS','1'),('C#','1'); ", function (err, results) {
-			if (err) {
-				console.log("Error running query2!");
-				return;
-			}
-		});
-	
-	
-## Delete values in your table
-	
-	
-		conn.queryRaw("DELETE FROM test WHERE value = 2 ;", function (err, results)
-		{
-			if (err) {
-				console.log("Error running query3!");
-				return;
-			}
-		});
-	
-	
-## Select values from your table
-	
-	
-		conn.queryRaw("SELECT * FROM test", function (err, results) {
-			if (err) {
-			console.log("Error running query4!");
-			return;
-			}
-			for (var i = 0; i < results.rows.length; i++) {
-				result = result + results.rows[i][0] + " : " + results.rows[i][1] + " votes";
-				result+= "\n";
-			}
-		});
-	
+	    conn.queryRaw("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express', 'SQLEXPRESS', 0, 0, CURRENT_TIMESTAMP)", function (err, results) {
+	        if (err) {
+	            console.log("Error running query!");
+	            return;
+	        }
+	        for (var i = 0; i < results.rows.length; i++) {
+	            console.log("Product ID Inserted : "+results.rows[i]);
+	        }
+	    });
+	   
+	});
 	
 ## Transactions
 	
