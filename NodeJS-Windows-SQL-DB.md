@@ -186,13 +186,26 @@ Copy the following code in a .js file located in your project directory. Run it 
 	
 > [AZURE.NOTE] For this code sample to work, you must first have or create a stored procedure that inputs no parameters. You can create a stored procedure with a tool such as SSMS.
 	
-	
-		conn.query("exec NameOfStoredProcedure", function (err, results) {
-			if (err) {
-				console.log("Error running query8!");
-				return;
-			}
-		});
+	var http = require('http');
+	var sql = require('msnodesql');
+	var http = require('http');
+	var fs = require('fs');
+	var useTrustedConnection = false;
+	var conn_str = "Driver={SQL Server Native Client 11.0};Server=tcp:yourserver.database.windows.net;" + (useTrustedConnection == true ? "Trusted_Connection={Yes};" : "UID=yourusername;PWD=yourpassword;") + "Database={AdventureWorks};";
+	sql.open(conn_str, function (err, conn) {
+	    if (err) {
+	        console.log("Error opening the connection!");
+	        return;
+	    }
+	    else
+	        console.log("Successfuly connected");
+		
+	    conn.query("exec NameOfStoredProcedure", function (err, results) {
+	    	if (err) {
+			console.log("Error running query8!");
+			return;
+		}
+	    });
 	});
 
 	
