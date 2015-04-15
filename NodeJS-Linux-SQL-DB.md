@@ -55,7 +55,7 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 	var connection = new Connection(config);
 	connection.on('connect', function(err) {
 	// If no error, then good to go...
-	console.log("Connected");
+		console.log("Connected");
 	});
 
 
@@ -71,9 +71,9 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 	};
 	var connection = new Connection(config);
 	connection.on('connect', function(err) {
-	// If no error, then good to go...
-	console.log("Connected");
-	executeStatement();
+		// If no error, then good to go...
+		console.log("Connected");
+		executeStatement();
 	});	
 	var Request = require('tedious').Request;
 	var TYPES = require('tedious').TYPES;
@@ -117,9 +117,9 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 	};
 	var connection = new Connection(config);
 	connection.on('connect', function(err) {
-	// If no error, then good to go...
-	console.log("Connected");
-	executeStatement1();
+		// If no error, then good to go...
+		console.log("Connected");
+		executeStatement1();
 	
 	});
 	
@@ -159,9 +159,9 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 	};
 	var connection = new Connection(config);
 	connection.on('connect', function(err) {
-	// If no error, then good to go...
-	console.log("Connected");
-	executeStatement2();
+		// If no error, then good to go...
+		console.log("Connected");
+		executeStatement2();
 	});	
 	var Request = require('tedious').Request;
 	var TYPES = require('tedious').TYPES;
@@ -181,9 +181,9 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 	};
 	var connection = new Connection(config);
 	connection.on('connect', function(err) {
-	// If no error, then good to go...
-	console.log("Connected");
-	executeStatement3();
+		// If no error, then good to go...
+		console.log("Connected");
+		executeStatement3();
 	});	
 	var Request = require('tedious').Request;
 	var TYPES = require('tedious').TYPES;
