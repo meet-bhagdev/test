@@ -149,24 +149,44 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 
 ## Transactions
 
-
-	cursor.execute("BEGIN TRANSACTION")
-	cursor.execute("DELETE FROM test WHERE value = 10;")
-	cnxn.rollback()
+	var Connection = require('tedious').Connection;
+	var config = {
+		userName: 'yourusername',
+		password: 'yourpassword',
+		server: 'yourserver.database.windows.net',
+		// If you're on Windows Azure, you will need this:
+		options: {encrypt: true, database: 'AdventureWorks'}
+	};
+	var connection = new Connection(config);
+	connection.on('connect', function(err) {
+	// If no error, then good to go...
+	console.log("Connected");
+	executeStatement2();
+	});	
+	var Request = require('tedious').Request;
+	var TYPES = require('tedious').TYPES;
+	function executeStatement2() {
+	//TODO
+	}
 
 ## Stored procedures
 
-
-	with pymssql.connect("yourserver", "yourusername", "yourpassword", "yourdatabase") as conn:
-    with conn.cursor(as_dict=True) as cursor:
-        cursor.execute("""
-        CREATE PROCEDURE FindName
-            @name VARCHAR(100)
-        AS BEGIN
-            SELECT * FROM test WHERE name = @name
-        END
-        """)
-        cursor.callproc('FindPerson', ('NodeJS',))
-        for row in cursor:
-            print("Name=%s, Votes=%d" % (row['name'], row['value']))
-
+	var Connection = require('tedious').Connection;
+	var config = {
+		userName: 'yourusername',
+		password: 'yourpassword',
+		server: 'yourserver.database.windows.net',
+		// If you're on Windows Azure, you will need this:
+		options: {encrypt: true, database: 'AdventureWorks'}
+	};
+	var connection = new Connection(config);
+	connection.on('connect', function(err) {
+	// If no error, then good to go...
+	console.log("Connected");
+	executeStatement3();
+	});	
+	var Request = require('tedious').Request;
+	var TYPES = require('tedious').TYPES;
+	function executeStatement3() {
+	//Todo
+	}
