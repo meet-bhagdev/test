@@ -1,5 +1,5 @@
 <properties 
-	pageTitle="Connect to SQL Database by using Node.js with Tedious on Ubuntu Linux" 
+	pageTitle="Connect to SQL Database by using Node.js with Tedious on Mac OS X" 
 	description="Presents a Node.js code sample you can use to connect to Azure SQL Database. The sample uses the Tedious driver to connect."
 	services="sql-database" 
 	documentationCenter="" 
@@ -18,30 +18,31 @@
 	ms.author="mebha"/>
 
 
-# Connect to SQL Database by using Node.js with Tedious on Ubuntu Linux
+# Connect to SQL Database by using Node.js with Tedious on Mac OS X
 
 
 [AZURE.INCLUDE [sql-database-develop-includes-selector-language-platform-depth](../../includes/sql-database-develop-includes-selector-language-platform-depth.md)]
 
 
-This topic presents a Node.js code sample that runs on Ubuntu Linux. The sample connects to Azure SQL Database by using the Tedious driver.
+This topic presents a Node.js code sample that runs on Mac OS X. The sample connects to Azure SQL Database by using the Tedious driver.
 
 
 ## Required software items
 
 
-Open your terminal and install **node** and **npm**, unless they are already installed on your machine.
+Install **node**, unless it is already installed on your machine.
 
 
-	sudo apt-get install node
-	sudo apt-get install npm
+To install node.js on OSX 10.10 Yosemite  you can download a pre-compiled binary package which makes a nice and easy installation. [Head over to nodejs.org](http://nodejs.org/) and click the install button to download the latest package.
+
+Install the package from the .dmg by following along the install wizard which will install both **node** and **npm**, npm is Node Package Manager which facilitates installs of additional packages for node.js.
 
 
 After your machine is configured with **node** and **npm**, navigate to a directory where you plan to create your Node.js project, and enter the following commands.
 
 
-	sudo npm init
-	sudp npm install tedious
+	npm init
+	npm install tedious
 
 
 **npm init** creates a node project. To retain the defaults during your project creation, press enter until the project is created. Now you see a **package.json** file in your project directory.
@@ -79,6 +80,8 @@ All SQL statements are executed using the [new Request()](http://pekim.github.io
 
 
 	var Connection = require('tedious').Connection;
+	var Request = require('tedious').Request;
+	var TYPES = require('tedious').TYPES;
 	var config = {
 		userName: 'yourusername',
 		password: 'yourpassword',
@@ -93,8 +96,6 @@ All SQL statements are executed using the [new Request()](http://pekim.github.io
 		executeStatement();
 	});
 	
-	var Request = require('tedious').Request;
-	var TYPES = require('tedious').TYPES;
 	
 	function executeStatement() {
 		request = new Request("SELECT c.CustomerID, c.CompanyName,COUNT(soh.SalesOrderID) AS OrderCount FROM SalesLT.Customer AS c LEFT OUTER JOIN SalesLT.SalesOrderHeader AS soh ON c.CustomerID = soh.CustomerID GROUP BY c.CustomerID, c.CompanyName ORDER BY OrderCount DESC;", function(err) {
@@ -131,6 +132,8 @@ The code sample in this section applies parameters to an SQL INSERT statement. T
 
 
 	var Connection = require('tedious').Connection;
+	var Request = require('tedious').Request
+	var TYPES = require('tedious').TYPES;
 	var config = {
 		userName: 'yourusername',
 		password: 'yourpassword',
@@ -145,8 +148,6 @@ The code sample in this section applies parameters to an SQL INSERT statement. T
 		executeStatement1();
 	});
 	
-	var Request = require('tedious').Request
-	var TYPES = require('tedious').TYPES;
 	
 	function executeStatement1() {
 		request = new Request("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES (@Name, @Number, @Cost, @Price, CURRENT_TIMESTAMP);", function(err) {
