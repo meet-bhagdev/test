@@ -1,0 +1,98 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "administratorLogin": {
+      "type": "string"
+    },
+    "administratorLoginPassword": {
+      "type": "securestring"
+    },
+    "collation": {
+      "type": "string",
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "databaseName": {
+      "type": "string"
+    },
+    "edition": {
+      "type": "string",
+      "defaultValue": "standard"
+    },
+    "requestedServiceObjectiveId": {
+      "type": "string",
+      "defaultValue": "455330e1-00cd-488b-b5fa-177c226f28b7"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "West US"
+
+    },
+    "maxSizeBytes": {
+      "type": "string",
+      "defaultValue": "268435456000"
+    },
+    "serverName": {
+      "type": "string"
+    },
+    "storageKeyType": {
+      "type": "string"
+    },
+    "storageKey": {
+      "type": "securestring"
+    },
+    "storageUri": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "defaultValue": "12.0"
+    }
+  },
+  "resources": [
+    {
+      "name": "[parameters('serverName')]",
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2014-04-01-preview",
+      "location": "[parameters('location')]",
+      "properties": {
+        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+        "version": "[parameters('version')]"
+      },
+      "resources": [
+        {
+          "name": "AllowAllWindowsAzureIps",
+          "type": "firewallrules",
+          "apiVersion": "2014-04-01-preview",
+          "location": "[parameters('location')]",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', parameters('serverName'))]"
+          ],
+          "properties": {
+            "endIpAddress": "255.255.255.255",
+            "startIpAddress": "0.0.0.0"
+          }
+        },
+        {
+          "name": "[parameters('databaseName')]",
+          "type": "databases",
+          "apiVersion": "2014-04-01-preview",
+          "location": "[parameters('location')]",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', parameters('serverName'))]"
+          ],
+          "properties": {
+            "collation": "[parameters('collation')]",
+            "edition": "[parameters('edition')]",
+            "maxSizeBytes": "[parameters('maxSizeBytes')]",
+            "requestedServiceObjectiveId": "[parameters('requestedServiceObjectiveId')]"
+          },
+          
+        },
+        
+      ],
+      
+    }
+  ]
+}
