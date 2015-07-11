@@ -18,9 +18,9 @@
 	ms.author="andrela"/>
 
 
-# Using SQL Database with Ruby on Ubuntu
+# Connect to SQL Database by using Ruby on Ubuntu Linux
 
-
+This topic presents a Ruby code sample that runs on an Ubuntu Linux client computer to connect to an Azure SQL Database database.
 
 
 ## Install the required modules
@@ -94,7 +94,7 @@ To align with the SQL Server [datetime](https://msdn.microsoft.com/en-us/library
     results = client.execute("SET QUOTED_IDENTIFIER ON")
     results = client.execute("SET ANSI_WARNINGS ON")
     results = client.execute("SET CONCAT_NULL_YIELDS_NULL ON")
-    results = client.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('Essadaadxpress', 'fadsasdsadsafsa', 0, 0, '#{curr_date}' )")
+    results = client.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('SQL Server Express New', 'SQLEXPRESS New', 0, 0, '#{curr_date}' )")
     results.each do |row| 
     puts row
     end 
