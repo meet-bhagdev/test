@@ -60,45 +60,32 @@ See the [getting started page](http://example.com/) to learn how to create a sam
 ## Connect to your SQL Database
 The [TinyTDS::Client](https://github.com/rails-sqlserver/tiny_tds) function is used to connect to SQL Database.
 
-    require 'tiny_tds'     
-    
-    print 'test'     
-    
+    require 'tiny_tds'        
     client = TinyTds::Client.new username: 'yourusername@yourserver', password: 'yourpassword', host: 'yourserver.database.windows.net', port: 1433, database: 'AdventureWorks', azure:true 
 
 ## Execute a query and retrieve the result set
 The [TinyTds::Result](https://github.com/rails-sqlserver/tiny_tds) function is used to retrieve a result set from a query against SQL Database. This function accepts a query and returns a result set, iterated over by using [result.each do |row|](https://github.com/rails-sqlserver/tiny_tds).
 
-	require 'tiny_tds'     
-    
+	require 'tiny_tds'  
     print 'test'     
-    
     client = TinyTds::Client.new username: 'yourusername@yourserver', password: 'yourpassword', host: 'yourserver.database.windows.net', port: 1433, database: 'AdventureWorks', azure:true 
-        
     results = client.execute("select * from SalesLT.Product") 
-        
     results.each do |row| 
-        
     puts row 
-       
     end 
     
-
 ## Inserting a row, passing parameters, and retrieving the generated primary key value
 In SQL Database the [IDENTITY](https://msdn.microsoft.com/library/ms186775.aspx) property and the [SEQUENCE](https://msdn.microsoft.com/library/ff878058.aspx) object can be used to auto-generate [primary key values](https://msdn.microsoft.com/library/ms179610.aspx). 
+
+To use TinyTDS with Azure, it is recommended that you execute several SET statements to change how the current session handles specific information.
 
 To align with the SQL Server [datetime](https://msdn.microsoft.com/en-us/library/ms187819.aspx) format, use the [strftime](http://ruby-doc.org/core-2.2.0/Time.html#method-i-strftime) function to cast the to the corresponding datetime format. 
 
     require 'tiny_tds'     
     require 'date'
-
     t = Time.now
-    curr_date = t.strftime("%Y-%m-%d %H:%M:%S.%L")
-    
-	print 'test'     
-    
+    curr_date = t.strftime("%Y-%m-%d %H:%M:%S.%L") 
     client = TinyTds::Client.new username: 'yourusername@yourserver', password: 'yourpassword', host: 'yourserver.database.windows.net', port: 1433, database: 'AdventureWorks', azure:true 
-          
     results = client.execute("SET ANSI_NULLS ON")
     results = client.execute("SET CURSOR_CLOSE_ON_COMMIT OFF")
     results = client.execute("SET ANSI_NULL_DFLT_ON ON")
@@ -107,12 +94,7 @@ To align with the SQL Server [datetime](https://msdn.microsoft.com/en-us/library
     results = client.execute("SET QUOTED_IDENTIFIER ON")
     results = client.execute("SET ANSI_WARNINGS ON")
     results = client.execute("SET CONCAT_NULL_YIELDS_NULL ON")
-    
     results = client.execute("INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT INSERTED.ProductID VALUES ('Essadaadxpress', 'fadsasdsadsafsa', 0, 0, '#{curr_date}' )")
-    
     results.each do |row| 
-    
     puts row
-    
     end 
-
