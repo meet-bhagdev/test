@@ -36,31 +36,15 @@ This topic illustrates how you can connect to Azure SQL Database from a client a
 See the [Getting Started Topic](sql-database-get-started.md) to learn how to create a sample database and retrieve your connection string. It is important you follow the guide to create an **AdventureWorks database template**. The samples shown below only work with the **AdventureWorks schema**. 
 
 
-## Connect to your SQL Database database
+## Connect and query your database 
 
+The demo program is designed so that a transient error during an attempt to connect leads to a retry. But a transient error during query command causes the program to discard the connection and create a new connection, before retrying the query command. We neither recommend nor disrecommend this design choice. The demo program illustrates some of the design flexibility that is available to you.
 
-This **OpenConnection** function is called near the top in all of the functions that follow.
-
-
-	function OpenConnection()
-	{
-		try
-		{
-			$serverName = "tcp:myserver.database.windows.net,1433";
-			$connectionOptions = array("Database"=>"AdventureWorks",
-				"Uid"=>"MyUser", "PWD"=>"MyPassword");
-			$conn = sqlsrv_connect($serverName, $connectionOptions);
-			if($conn == false)
-				die(FormatErrors(sqlsrv_errors()));
-		}
-		catch(Exception $e)
-		{
-			echo("Error!");
-		}
-	}
-
-
-## Execute a query and retrieve the result set
+<br>The length of this code sample is due mostly to the catch exception logic. A shorter version of this Program.cs file is available this [here](https://azure.microsoft.com/en-us/documentation/articles/sql-database-develop-php-simple-windows/).
+<br>The Main method is in Program.cs. The callstack runs as follows:
+* Main calls ConnectAndQuery.
+* ConnectAndQuery calls EstablishConnection.
+* EstablishConnection calls IssueQueryCommand.
 
 The [sqlsrv_query()](http://php.net/manual/en/function.sqlsrv-query.php) function can be used to retrieve a result set from a query against SQL Database. This function essentially accepts any query and the connection object and returns a result set which can be iterated over with the use of [sqlsrv_fetch_array()](http://php.net/manual/en/function.sqlsrv-fetch-array.php).
 
@@ -150,90 +134,6 @@ The [sqlsrv_query()](http://php.net/manual/en/function.sqlsrv-query.php) functio
 		}
 	?>
 	
-
-## Insert a row, pass parameters, and retrieve the generated primary key
-
-
-In SQL Database the [IDENTITY](https://msdn.microsoft.com/library/ms186775.aspx) property and the [SEQUENCE](https://msdn.microsoft.com/library/ff878058.aspx) object can be used to auto-generate [primary key](https://msdn.microsoft.com/library/ms179610.aspx) values. 
-
-
-	function InsertData()
-	{
-		try
-		{
-			$conn = OpenConnection();
-
-			$tsql = "INSERT SalesLT.Product (Name, ProductNumber, StandardCost, ListPrice, SellStartDate) OUTPUT 			INSERTED.ProductID VALUES ('SQL Server 1', 'SQL Server 2', 0, 0, getdate())";
-			//Insert query
-			$insertReview = sqlsrv_query($conn, $tsql);
-			if($insertReview == FALSE)
-				die(FormatErrors( sqlsrv_errors()));
-			echo "Product Key inserted is :";	
-			while($row = sqlsrv_fetch_array($insertReview, SQLSRV_FETCH_ASSOC))
-			{   
-				echo($row['ProductID']);
-			}
-			sqlsrv_free_stmt($insertReview);
-			sqlsrv_close($conn);
-		}
-		catch(Exception $e)
-		{
-			echo("Error!");
-		}
-	}
-
-## Transactions
-
-
-This code example demonstrates the use of transactions in which you:
-
--Begin a transaction
-
--Insert a row of data, Update another row of data
-
--Commit your transaction if the insert and update were successful and rollback the transaction if one of them was not
-
-
-	function Transactions()
-	{
-		try
-		{
-			$conn = OpenConnection();
-
-			if (sqlsrv_begin_transaction($conn) == FALSE)
-				die(FormatErrors(sqlsrv_errors()));
-
-			$tsql1 = "INSERT INTO SalesLT.SalesOrderDetail (SalesOrderID,OrderQty,ProductID,UnitPrice) 
-			VALUES (71774, 22, 709, 33)";
-			$stmt1 = sqlsrv_query($conn, $tsql1);
-			
-			/* Set up and execute the second query. */
-			$tsql2 = "UPDATE SalesLT.SalesOrderDetail SET OrderQty = (OrderQty + 1) WHERE ProductID = 709";
-			$stmt2 = sqlsrv_query( $conn, $tsql2);
-			
-			/* If both queries were successful, commit the transaction. */
-			/* Otherwise, rollback the transaction. */
-			if($stmt1 && $stmt2)
-			{
-			       sqlsrv_commit($conn);
-			       echo("Transaction was commited");
-			}
-			else
-			{
-			    sqlsrv_rollback($conn);
-			    echo "Transaction was rolled back.\n";
-			}
-			/* Free statement and connection resources. */
-			sqlsrv_free_stmt( $stmt1);
-			sqlsrv_free_stmt( $stmt2);
-		}
-		catch(Exception $e)
-		{
-			echo("Error!");
-		}
-	}
-
-
 ## Further reading
 
 
