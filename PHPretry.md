@@ -64,7 +64,7 @@ This **OpenConnection** function is called near the top in all of the functions 
 
 The [sqlsrv_query()](http://php.net/manual/en/function.sqlsrv-query.php) function can be used to retrieve a result set from a query against SQL Database. This function essentially accepts any query and the connection object and returns a result set which can be iterated over with the use of [sqlsrv_fetch_array()](http://php.net/manual/en/function.sqlsrv-fetch-array.php).
 
-		<?php
+	<?php
 		// Variables to tune the retry logic.  
 		$connectionTimeoutSeconds = 30;  // Default of 15 seconds is too short over the Internet, sometimes.
 		$maxCountTriesConnectAndQuery = 3;  // You can adjust the various retry count values.
@@ -148,7 +148,7 @@ The [sqlsrv_query()](http://php.net/manual/en/function.sqlsrv-query.php) functio
 		    if($count >= 0) //change to > 0 later.
 		        return TRUE;
 		}
-		?>
+	?>
 	
 
 ## Insert a row, pass parameters, and retrieve the generated primary key
