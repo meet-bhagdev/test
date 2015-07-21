@@ -1,6 +1,6 @@
 <properties
 	pageTitle="PHP on Windows to SQL DB | Microsoft Azure"
-	description="Presents a sample PHP program that connects to Azure SQL Database from a Windows client, and provides links to the necessary software components needed by the client."
+	description="Presents a sample PHP program that connects to Azure SQL Database from a Windows client with transient fault handling, and provides links to the necessary software components needed by the client."
 	services="sql-database"
 	documentationCenter=""
 	authors="meet-bhagdev"
@@ -14,11 +14,11 @@
 	ms.tgt_pltfrm="na"
 	ms.devlang="php"
 	ms.topic="article"
-	ms.date="07/20/2015"
+	ms.date="07/21/2015"
 	ms.author="mebha"/>
 
 
-# Connect to SQL Database by using PHP on Windows
+# Connect to SQL Database by using PHP on Windows with Transient Fault Handling
 
 
 [AZURE.INCLUDE [sql-database-develop-includes-selector-language-platform-depth](../../includes/sql-database-develop-includes-selector-language-platform-depth.md)]
