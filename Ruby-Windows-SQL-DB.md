@@ -28,13 +28,28 @@ This topic presents a Ruby code sample that runs on a Windows computer running W
 
 Open your terminal and install the following:
 
-**1) Ruby**: If you don’t know what version to install and you're getting started with Ruby, we recommend you use Ruby 2.1.X installers. These provide a stable language and a extensive list of packages (gems) that are compatible and updated. [Go the Ruby download page]() and download the appropriate 2.1.x installer. For example if you are on a 64 bit machine, download the **Ruby 2.1.6 (x64)** installer.
-<br>Once it’s downloaded, double click the file to start the installer. Select your language and agree to the terms, then on the install settings screen, check the boxes next to both "Add Ruby executables to your PATH" and "Associate .rb and .rbw files with this Ruby installation". 
+**1) Ruby:** If you don’t know what version to install and you're getting started with Ruby, we recommend you use Ruby 2.1.X installers. These provide a stable language and a extensive list of packages (gems) that are compatible and updated. [Go the Ruby download page]() and download the appropriate 2.1.x installer. For example if you are on a 64 bit machine, download the **Ruby 2.1.6 (x64)** installer.
+<br/><br/>Once the installer is downloaded, do the following: 
+
+
+- Double-click the file to start the installer.
+
+- Select your language, and agree to the terms.
+
+- On the install settings screen, select the check boxes next to both *Add Ruby executables to your PATH* and *Associate .rb and .rbw files with this Ruby installation*.
 
 
 **2) DevKit:** Download DevKit from the [RubyInstaller page](http://rubyinstaller.org/downloads/)
 
-When the download is finished, double click the file and you will be asked where to extract the files. Click the "…" button, and select "C:\DevKit" (you’ll probably need to create this folder first by clicking "Make New Folder"). Click "OK", and then "Extract" to extract the files.
+After the download is finished, do the following:
+
+
+- Double-click the file. You will be asked where to extract the files.
+
+- Click the "..." button, and select "C:\DevKit". You will probably need to create this folder first by clicking "Make New Folder".
+
+- Click "OK", and then "Extract", to extract the files.
+
 
 Now open the Command Prompt and enter the following commands:
 
@@ -51,7 +66,7 @@ You now have a fully functional Ruby and RubyGems!
 
 ## Create a database, retrieve your connection string
 
-The Ruby sample relies on the AdventureWorks sample database. If you do not already have AdventureWorks, you can see how to create it at the following topic: [Create your first Azure SQL Database](sql-database-get-started.md)
+The Ruby sample relies on the `AdventureWorks` sample database. If you do not already have `AdventureWorks`, you can see how to create it by visiting [Create your first Azure SQL Database](sql-database-get-started.md).
 
 The topic also explains how to retrieve the database connection string.
 
@@ -66,11 +81,11 @@ The [TinyTDS::Client](https://github.com/rails-sqlserver/tiny_tds) function is u
 
 ## Execute a SELECT statement and retrieve the result set
 
-Copy and paste the following code in an empty file. Call it test.rb. Then execute it by entering the following command from your command prompt.
+Copy and paste the following code in an empty file. Call it test.rb. Then execute it by entering the following command from your command prompt:
 
 	ruby test.rb
 
-The [TinyTds::Result](https://github.com/rails-sqlserver/tiny_tds) function is used to retrieve a result set from a query against SQL Database. This function accepts a query and returns a result set. The results set is iterated over by using [result.each do |row|](https://github.com/rails-sqlserver/tiny_tds).
+In the code sample, the [TinyTds::Result](https://github.com/rails-sqlserver/tiny_tds) function is used to retrieve a result set from a query against SQL Database. This function accepts a query and returns a result set. The results set is iterated over by using [result.each do |row|](https://github.com/rails-sqlserver/tiny_tds).
 
     require 'tiny_tds'  
     print 'test'     
